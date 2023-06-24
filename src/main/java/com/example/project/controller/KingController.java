@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //Autowired automatically hooks up dependencies when an instance of the annotated class is created
+import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 //This is what throws status codes to the client.
 import org.springframework.http.HttpStatus;
@@ -57,5 +58,15 @@ public class KingController {
         return Optional.of(_king);
     }
 
+    @PutMapping("/kings/{id}")
+    public Optional<King> updateKing(@PathVariable("id") long id, @RequestBody King king){
+        King _king = kingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Couldn't find King with id: " + id));
 
+        _king.setTitle(king.getTitle());
+        _king.setName(king.getName());
+        _king.setIsHeathen(king.getIsHeathen());
+
+        return Optional.of(kingRepository.save(_king));
+    }
 }
