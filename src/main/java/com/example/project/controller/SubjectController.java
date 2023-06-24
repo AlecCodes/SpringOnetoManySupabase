@@ -50,5 +50,13 @@ public class SubjectController {
         return Optional.of(subject);
     }
 
+    @DeleteMapping("/subjects/{id}")
+    public Optional<Subject> deleteSubject(@PathVariable(value="id") long id){
+        Subject _subject = subjectRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Couldn't find subject with id: " + id));
+        subjectRepository.deleteById(id);
+
+        return Optional.of(_subject);
+    }
 
 }
