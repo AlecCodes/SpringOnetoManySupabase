@@ -35,7 +35,8 @@ public class SubjectController {
     public Optional<Subject> getSubjectsById(@PathVariable(value = "id") Long id){
         Subject subject = subjectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("COULD NOT FIND SUBJECT W ID: " + id));
-        return Optional.of(subject);
+//        return Optional.of(subject);
+        return subjectRepository.findById(id);
     }
 
     //our JPA repository methods like findByID return an optional, upon which we can use the .map method to transform
