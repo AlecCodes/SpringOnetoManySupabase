@@ -7,7 +7,7 @@ import com.example.project.model.Subject;
 
 //JpaRepository needs two type parameters, the type of the entity, and the type of the primary key
 public interface SubjectRepository extends JpaRepository<Subject,Long>{
-    List<Subject> findById(long postId);
+    List<Subject> findByKingId(long postId);
 
     @Transactional
     void deleteById(long subjectId);
