@@ -36,4 +36,10 @@ public class KingController {
 
         return Optional.of(kings);
     }
+
+    @PostMapping("/kings")
+    public Optional<King> createKing(@RequestBody King king){
+        King _king = kingRepository.save(new King(king.getTitle(), king.getName(), king.getIsHeathen()));
+        return Optional.of(_king);
+    }
 }
