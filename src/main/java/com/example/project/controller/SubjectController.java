@@ -37,4 +37,18 @@ public class SubjectController {
                 .orElseThrow(() -> new RuntimeException("COULD NOT FIND SUBJECT W ID: " + id));
         return Optional.of(subject);
     }
+
+    //our JPA repository methods like findByID return an optional, upon which we can use the .map method to transform
+    //the value of the optional with the provided lambda function (callback)
+    @PostMapping("/kings/{kingId}/subjects")
+    public Optional<Subject> createSubject(@PathVariable(value="kingId") long kingId, @RequestBody Subject subjectRequest){
+        Subject subject = kingRepository.findById(kingId).map(king -> {
+            subjectRequest.setKing(king);
+            return subjectRepository.save(subjectRequest);
+        }).orElseThrow(() -> new RuntimeException("Couldn't find king with id: " + kingId));
+
+        return Optional.of(subject);
+    }
+
+
 }

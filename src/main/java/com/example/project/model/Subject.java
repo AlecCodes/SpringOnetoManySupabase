@@ -16,7 +16,7 @@ public class Subject {
     @Column(name="name")
     private String name;
 
-    @Lob
+    @Column(name="description")
     private String description;
 
     //Fetchtype lazy tells Hibernate(ORM) to only fetch the related entites when needed
