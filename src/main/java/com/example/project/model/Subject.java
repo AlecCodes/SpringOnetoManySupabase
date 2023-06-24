@@ -20,6 +20,8 @@ public class Subject {
     private String description;
 
     //Fetchtype lazy tells Hibernate(ORM) to only fetch the related entites when needed
+    //Many to one is better because we don't have to declare the connection in the parent entity first
+    //It also allows us to make more changes to our repository
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "king_id", nullable = false)
     //Delete children upon deletion
