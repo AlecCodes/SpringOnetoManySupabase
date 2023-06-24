@@ -69,4 +69,13 @@ public class KingController {
 
         return Optional.of(kingRepository.save(_king));
     }
+
+    @DeleteMapping("/kings/{id}")
+    public Optional<King> regicide(@PathVariable("id") long id){
+        King king = kingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Couldn't find King with id = " + id));
+        kingRepository.deleteById(id);
+        return Optional.of(king);
+    }
+
 }
