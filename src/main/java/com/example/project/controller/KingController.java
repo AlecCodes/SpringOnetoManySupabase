@@ -19,6 +19,12 @@ import com.example.project.repository.KingRepository;
 @RestController
 @RequestMapping("/api")
 public class KingController {
+
+    public class ResourceNotFoundException extends RuntimeException{
+        public ResourceNotFoundException(String message){
+            super(message);
+        }
+    }
     @Autowired
     KingRepository kingRepository;
 
@@ -37,9 +43,19 @@ public class KingController {
         return Optional.of(kings);
     }
 
+    @GetMapping("/kings/{id}")
+    public Optional<King> getKingById(@PathVariable("id") long id){
+        King king = kingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Couldn't find King with id = " + id));
+        return Optional.of(king);
+
+    }
+
     @PostMapping("/kings")
     public Optional<King> createKing(@RequestBody King king){
         King _king = kingRepository.save(new King(king.getTitle(), king.getName(), king.getIsHeathen()));
         return Optional.of(_king);
     }
+
+
 }
