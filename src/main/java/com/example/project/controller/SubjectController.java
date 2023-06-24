@@ -59,4 +59,14 @@ public class SubjectController {
         return Optional.of(_subject);
     }
 
+    @PutMapping("/subjects/{id}")
+    public Optional<Subject> updateSubject(@PathVariable(value="id") long id, @RequestBody Subject subjectRequest){
+        Subject subject = subjectRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Couldn't find subject with id: " + id));
+        subject.setName(subjectRequest.getName());
+        subject.setDescription(subject.getDescription());
+
+        return Optional.of(subject);
+    }
+
 }
